@@ -1,0 +1,82 @@
+<navigation-bar title="日计划" color="#2F3A34" background="#EDF7EE"></navigation-bar>
+
+<scroll-view class="scroll-page" scroll-y type="list">
+  <view class="page day-page">
+    <view class="day-header">
+      <view>
+        <view class="date-title">{{dateTitle}}</view>
+        <view class="muted">时间轴 + 当天事项</view>
+      </view>
+      <button class="small-button secondary-button">新增</button>
+    </view>
+
+    <view class="filter-row">
+      <view
+        wx:for="{{filters}}"
+        wx:key="key"
+        class="filter-chip avatar-filter {{activeFilter === item.key ? 'active' : ''}}"
+        data-filter="{{item.key}}"
+        bindtap="setFilter"
+      >
+        <view class="filter-avatars">
+          <text wx:for="{{item.avatars}}" wx:key="*this" wx:for-item="avatar" class="filter-avatar {{avatar === 'W' ? 'blue' : 'green'}}">{{avatar}}</text>
+        </view>
+        <text class="filter-label">{{item.label}}</text>
+      </view>
+    </view>
+
+    <view class="section-title">时间轴</view>
+    <view class="plan-stack">
+      <view wx:for="{{timelinePlans}}" wx:key="id" class="day-plan card">
+        <view class="time-column">{{item.time}}</view>
+        <view class="color-line {{item.color}}"></view>
+        <view class="day-plan-main">
+          <view class="plan-row">
+            <text class="owner-name">{{item.owner}}</text>
+            <text class="plan-name">{{item.title}}</text>
+          </view>
+          <view class="meta-row">
+            <text class="pill {{item.color === 'blue' ? 'pill-blue' : ''}}">{{item.tag}}</text>
+            <text class="status-text {{item.status === '逾期' ? 'overdue' : ''}}">{{item.status}}</text>
+          </view>
+          <view class="actions">
+            <button class="mini-button primary-button" bindtap="goFocus">开始计时</button>
+            <button class="mini-button secondary-button" bindtap="completePlan">标记完成</button>
+            <button class="delete-button" data-id="{{item.id}}" data-list="timeline" bindtap="deletePlan">删除</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-title">当天事项</view>
+    <view class="plan-stack">
+      <view wx:for="{{dayItems}}" wx:key="id" class="day-plan card">
+        <view class="time-column loose">{{item.time}}</view>
+        <view class="color-line {{item.color}}"></view>
+        <view class="day-plan-main">
+          <view class="plan-row">
+            <text class="owner-name">{{item.owner}}</text>
+            <text class="plan-name">{{item.title}}</text>
+          </view>
+          <view class="meta-row">
+            <text class="pill {{item.color === 'blue' ? 'pill-blue' : ''}}">{{item.tag}}</text>
+            <text class="status-text">{{item.status}}</text>
+          </view>
+          <view class="actions">
+            <button class="mini-button primary-button" bindtap="goFocus">开始计时</button>
+            <button class="mini-button secondary-button" bindtap="completePlan">标记完成</button>
+            <button class="delete-button" data-id="{{item.id}}" data-list="day" bindtap="deletePlan">删除</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="undated card">
+      <view>
+        <view class="undated-title">还有 3 个未定计划</view>
+        <view class="muted">补充日期后会进入月视图</view>
+      </view>
+      <text class="undated-arrow">›</text>
+    </view>
+  </view>
+</scroll-view>

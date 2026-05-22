@@ -1,0 +1,37 @@
+<navigation-bar title="专注计时" color="#2F3A34" background="#EDF7EE"></navigation-bar>
+
+<view class="page focus-page">
+  <view class="task-card card">
+    <view class="muted">当前任务</view>
+    <view class="task-title">{{taskTitle}}</view>
+    <view class="tag-row">
+      <text class="pill">{{tag}}</text>
+      <text class="pill {{mode === 'shallow' ? 'pill-blue' : ''}}">{{modeText}}</text>
+    </view>
+  </view>
+
+  <view class="mode-card card">
+    <view class="mode-title">选择计时模式</view>
+    <view class="mode-row">
+      <view class="mode-option {{mode === 'deep' ? 'active' : ''}}" data-mode="deep" bindtap="chooseMode">
+        <view class="mode-name">深度计时</view>
+        <view class="muted">退出小程序自动暂停</view>
+      </view>
+      <view class="mode-option {{mode === 'shallow' ? 'active' : ''}}" data-mode="shallow" bindtap="chooseMode">
+        <view class="mode-name">浅度计时</view>
+        <view class="muted">退出后继续计时</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="timer card">
+    <view class="tree">树</view>
+    <view class="time">{{timeText}}</view>
+    <view class="muted">{{isPaused ? '已暂停，回来后可以继续' : '保持稳定呼吸，慢慢推进'}}</view>
+  </view>
+
+  <view class="control-row">
+    <button class="control-button secondary-button" bindtap="togglePause">{{isPaused ? '继续' : '暂停'}}</button>
+    <button class="control-button primary-button" bindtap="finishFocus">结束</button>
+  </view>
+</view>

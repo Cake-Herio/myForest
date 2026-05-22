@@ -1,0 +1,87 @@
+<navigation-bar title="MyForest" back="{{false}}" color="#2F3A34" background="#EDF7EE"></navigation-bar>
+
+<scroll-view class="scroll-page" scroll-y type="list">
+  <view class="page home">
+    <view class="hero">
+      <view>
+        <view class="muted">{{today}}</view>
+        <view class="hero-title">你好，{{nickname}}</view>
+        <view class="hero-subtitle">今天也慢慢种一棵树</view>
+      </view>
+      <button class="settings-button" bindtap="goSettings">设置</button>
+    </view>
+
+    <view class="summary card">
+      <view wx:for="{{summary}}" wx:key="label" class="summary-item">
+        <view class="summary-value">{{item.value}}</view>
+        <view class="summary-label">{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="action-grid">
+      <button
+        class="voice-button {{isRecording ? 'recording' : ''}}"
+        bindtouchstart="onVoiceStart"
+        bindtouchend="onVoiceEnd"
+        bindtouchcancel="onVoiceCancel"
+      >
+        <view class="voice-icon">按</view>
+        <view>
+          <view class="voice-title">长按说话做计划表</view>
+          <view class="voice-subtitle">{{isRecording ? '松开生成计划草稿' : 'AI 整理成计划草稿'}}</view>
+        </view>
+      </button>
+
+      <button class="focus-button" bindtap="goFocus">
+        <view class="focus-icon">计</view>
+        <view>
+          <view class="focus-title">开始计时</view>
+          <view class="focus-subtitle">深度 / 浅度</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="section-title">
+      <text>今日计划</text>
+      <text class="section-link" bindtap="goCalendar">查看计划表</text>
+    </view>
+
+    <view class="plan-list">
+      <view wx:for="{{nextPlans}}" wx:key="title" class="plan-card card" bindtap="goDay">
+        <view class="owner-dot {{item.color}}">{{item.owner}}</view>
+        <view class="plan-main">
+          <view class="plan-title">{{item.title}}</view>
+          <view class="muted">{{item.time}} · {{item.tag}}</view>
+        </view>
+        <view class="pill">待开始</view>
+      </view>
+    </view>
+
+    <view class="partner card">
+      <view class="partner-avatar">W</view>
+      <view class="partner-main">
+        <view class="partner-title">{{partner.name}} · {{partner.status}}</view>
+        <view class="muted">{{partner.focus}}</view>
+      </view>
+      <view class="leaf">芽</view>
+    </view>
+
+    <view wx:if="{{isRecording}}" class="voice-mask">
+      <view class="voice-panel">
+        <view class="mic-circle">
+          <view class="mic-head"></view>
+          <view class="mic-line"></view>
+        </view>
+        <view class="wave-row">
+          <view class="wave-bar bar-1"></view>
+          <view class="wave-bar bar-2"></view>
+          <view class="wave-bar bar-3"></view>
+          <view class="wave-bar bar-4"></view>
+          <view class="wave-bar bar-5"></view>
+        </view>
+        <view class="record-title">正在听你说计划</view>
+        <view class="record-tip">松开发送，上滑取消</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

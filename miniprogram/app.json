@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/calendar/calendar",
+    "pages/day/day",
+    "pages/focus/focus",
+    "pages/completed/completed",
+    "pages/stats/stats",
+    "pages/tags/tags",
+    "pages/settings/settings",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#7A857D",
+    "selectedColor": "#5F9F72",
+    "backgroundColor": "#FFFDF7",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "text": "计划"
+      },
+      {
+        "pagePath": "pages/completed/completed",
+        "text": "完成"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "统计"
+      }
+    ]
+  },
+  "style": "v2",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

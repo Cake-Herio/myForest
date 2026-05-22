@@ -1,0 +1,33 @@
+<navigation-bar title="统计" back="{{false}}" color="#2F3A34" background="#EDF7EE"></navigation-bar>
+
+<scroll-view class="scroll-page" scroll-y type="list">
+  <view class="page stats-page">
+    <view class="stats-header">
+      <view>
+        <view class="stats-title">{{range}}统计</view>
+        <view class="muted">按标签、成员和时间范围查看</view>
+      </view>
+      <view class="pill">全部成员</view>
+    </view>
+
+    <view class="stats-grid">
+      <view wx:for="{{cards}}" wx:key="label" class="stats-card card">
+        <view class="stats-value">{{item.value}}</view>
+        <view class="muted">{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="section-title">标签时长</view>
+    <view class="tag-list card">
+      <view wx:for="{{tagStats}}" wx:key="tag" class="tag-stat">
+        <view class="tag-row">
+          <text class="tag-name">{{item.tag}}</text>
+          <text class="tag-time">{{item.time}}</text>
+        </view>
+        <view class="bar">
+          <view class="bar-fill" style="width: {{item.percent}}%;"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
