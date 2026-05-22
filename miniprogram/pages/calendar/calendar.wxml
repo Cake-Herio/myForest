@@ -3,12 +3,12 @@
 <scroll-view class="scroll-page" scroll-y type="list">
   <view class="page calendar-page">
     <view class="calendar-header">
-      <button class="month-button prev">‹</button>
-      <view>
+      <button class="month-button prev" data-offset="-1" bindtap="changeMonth">‹</button>
+      <view bindtap="openMonthPicker">
         <view class="month-title">{{monthTitle}}</view>
         <view class="muted">月视图只展示摘要，点日期看详情</view>
       </view>
-      <button class="month-button next">›</button>
+      <button class="month-button next" data-offset="1" bindtap="changeMonth">›</button>
     </view>
 
     <view class="filter-row">
@@ -32,7 +32,7 @@
       </view>
 
       <view class="day-grid">
-        <view wx:for="{{days}}" wx:key="day" class="day-cell {{item.muted ? 'muted-day' : ''}} {{item.selected ? 'selected' : ''}}" bindtap="goDay">
+        <view wx:for="{{days}}" wx:key="date" class="day-cell {{item.muted ? 'muted-day' : ''}} {{item.selected ? 'selected' : ''}}" data-date="{{item.date}}" bindtap="goDay">
           <view class="day-top">
             <text class="day-number">{{item.day}}</text>
             <text wx:if="{{item.overdue}}" class="overdue-dot">!</text>
@@ -49,5 +49,118 @@
     </view>
 
     <button class="add-button primary-button" bindtap="addPlan">新增计划 / 语音计划</button>
+
+    <view wx:if="{{isMonthPickerVisible}}" class="picker-mask" catchtap="closeMonthPicker" catchtouchmove="noop">
+      <view class="picker-panel" catchtap="noop">
+        <view class="picker-header">
+          <view>
+            <view class="picker-title">切换月份</view>
+            <view class="muted">{{pickerYear}} 年 {{pickerMonth + 1}} 月</view>
+          </view>
+          <button class="picker-close" bindtap="closeMonthPicker">×</button>
+        </view>
+
+        <picker-view class="month-picker" value="{{pickerValue}}" bindchange="onPickerChange" indicator-class="picker-indicator">
+          <picker-view-column>
+            <view wx:for="{{years}}" wx:key="*this" class="picker-option">{{item}} 年</view>
+          </picker-view-column>
+          <picker-view-column>
+            <view wx:for="{{months}}" wx:key="*this" class="picker-option">{{item}}</view>
+          </picker-view-column>
+        </picker-view>
+
+        <button class="picker-confirm primary-button" bindtap="confirmMonthPicker">确认切换</button>
+      </view>
+    </view>
+
+    <view wx:if="{{isAddPlanVisible}}" class="add-plan-mask" catchtouchmove="noop">
+      <view class="add-plan-panel">
+        <button class="picker-close add-close" bindtap="closeAddPlan">×</button>
+        <view class="picker-title">新增计划</view>
+        <view class="muted">先手动打通数据，后续接 AI 语音草稿</view>
+
+        <view class="form-label">归属成员</view>
+        <view class="owner-row">
+          <view class="owner-chip {{newPlan.ownerKey === 'me' ? 'active' : ''}}" data-owner="me" bindtap="choosePlanOwner">
+            <text class="filter-avatar green">我</text>
+            <text>我</text>
+          </view>
+          <view class="owner-chip {{newPlan.ownerKey === 'partner' ? 'active' : ''}}" data-owner="partner" bindtap="choosePlanOwner">
+            <text class="filter-avatar blue">W</text>
+            <text>对方</text>
+          </view>
+        </view>
+
+        <view class="form-label">计划标题</view>
+        <input class="form-input" value="{{newPlan.title}}" data-field="title" placeholder="例如：背英语单词" bindinput="onPlanInput" />
+
+        <view class="form-label">主题标签</view>
+        <view class="tag-row">
+          <view
+            wx:for="{{quickTags}}"
+            wx:key="name"
+            class="tag-chip {{newPlan.tag === item.name ? 'active' : ''}}"
+            data-tag="{{item.name}}"
+            bindtap="choosePlanTag"
+          >
+            <text class="tag-color-dot" style="background: {{item.color}};"></text>
+            {{item.name}}
+          </view>
+          <view class="tag-add-chip" bindtap="openTagCreator">+</view>
+        </view>
+
+        <view class="form-label">日期</view>
+        <input class="form-input" value="{{newPlan.date}}" data-field="date" placeholder="YYYY-MM-DD" bindinput="onPlanInput" />
+
+        <view class="time-form-row">
+          <view class="time-form-item">
+            <view class="form-label">开始时间</view>
+            <input class="form-input" value="{{newPlan.startTime}}" data-field="startTime" placeholder="09:00" bindinput="onPlanInput" />
+          </view>
+          <view class="time-form-item">
+            <view class="form-label">结束时间</view>
+            <input class="form-input" value="{{newPlan.endTime}}" data-field="endTime" placeholder="10:00" bindinput="onPlanInput" />
+          </view>
+        </view>
+
+        <view class="time-form-row">
+          <view class="time-form-item">
+            <view class="form-label">模糊时间</view>
+            <input class="form-input" value="{{newPlan.timeText}}" data-field="timeText" placeholder="今天 / 晚上" bindinput="onPlanInput" />
+          </view>
+          <view class="time-form-item">
+            <view class="form-label">预计分钟</view>
+            <input class="form-input" type="number" value="{{newPlan.estimatedMinutes}}" data-field="estimatedMinutes" placeholder="30" bindinput="onPlanInput" />
+          </view>
+        </view>
+
+        <button class="picker-confirm primary-button" bindtap="saveNewPlan">保存计划</button>
+      </view>
+    </view>
+
+    <view wx:if="{{isTagCreatorVisible}}" class="tag-creator-mask" catchtouchmove="noop">
+      <view class="tag-creator-panel">
+        <button class="picker-close add-close" bindtap="closeTagCreator">×</button>
+        <view class="picker-title">新增标签</view>
+        <view class="muted">输入标签名，并选择一个颜色</view>
+
+        <view class="form-label">标签名</view>
+        <input class="form-input" value="{{newTag.name}}" placeholder="例如：日语 / 跑步" bindinput="onTagNameInput" />
+
+        <view class="form-label">颜色</view>
+        <view class="color-row">
+          <view
+            wx:for="{{tagColors}}"
+            wx:key="*this"
+            class="color-choice {{newTag.color === item ? 'active' : ''}}"
+            style="background: {{item}};"
+            data-color="{{item}}"
+            bindtap="chooseTagColor"
+          ></view>
+        </view>
+
+        <button class="picker-confirm primary-button" bindtap="saveNewTag">保存标签</button>
+      </view>
+    </view>
   </view>
 </scroll-view>

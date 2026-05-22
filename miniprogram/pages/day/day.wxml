@@ -40,11 +40,11 @@
             <text class="status-text {{item.status === '逾期' ? 'overdue' : ''}}">{{item.status}}</text>
           </view>
           <view class="actions">
-            <button class="mini-button primary-button" bindtap="goFocus">开始计时</button>
-            <button class="mini-button secondary-button" bindtap="completePlan">标记完成</button>
-            <button class="delete-button" data-id="{{item.id}}" data-list="timeline" bindtap="deletePlan">删除</button>
+            <button class="mini-button start" bindtap="goFocus">开始计时</button>
+            <button class="mini-button done" data-id="{{item.id}}" bindtap="completePlan">标记完成</button>
           </view>
         </view>
+        <button class="delete-button" data-id="{{item.id}}" bindtap="deletePlan">删</button>
       </view>
     </view>
 
@@ -63,11 +63,11 @@
             <text class="status-text">{{item.status}}</text>
           </view>
           <view class="actions">
-            <button class="mini-button primary-button" bindtap="goFocus">开始计时</button>
-            <button class="mini-button secondary-button" bindtap="completePlan">标记完成</button>
-            <button class="delete-button" data-id="{{item.id}}" data-list="day" bindtap="deletePlan">删除</button>
+            <button class="mini-button start" bindtap="goFocus">开始计时</button>
+            <button class="mini-button done" data-id="{{item.id}}" bindtap="completePlan">标记完成</button>
           </view>
         </view>
+        <button class="delete-button" data-id="{{item.id}}" bindtap="deletePlan">删</button>
       </view>
     </view>
 

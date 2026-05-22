@@ -47,6 +47,12 @@
   margin-bottom: 12rpx;
 }
 
+.tag-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
 .tag-name {
   font-size: 28rpx;
   font-weight: 800;
@@ -69,4 +75,80 @@
   height: 100%;
   border-radius: 999rpx;
   background: linear-gradient(90deg, #6fb67b, #a5cf8a);
+}
+
+.pie-card {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  padding: 30rpx;
+}
+
+.pie-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 220rpx;
+  height: 220rpx;
+  flex: 0 0 220rpx;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.4);
+}
+
+.pie-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  background: #fffdf7;
+}
+
+.pie-value {
+  color: #2f3a34;
+  font-size: 26rpx;
+  font-weight: 900;
+}
+
+.pie-legend {
+  flex: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.legend-item + .legend-item {
+  margin-top: 22rpx;
+}
+
+.legend-main {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.legend-dot {
+  display: inline-flex;
+  width: 18rpx;
+  height: 18rpx;
+  flex: 0 0 18rpx;
+  border-radius: 50%;
+}
+
+.legend-name {
+  color: #2f3a34;
+  font-size: 26rpx;
+  font-weight: 800;
+}
+
+.legend-meta {
+  color: #6e7b71;
+  font-size: 24rpx;
+  white-space: nowrap;
 }

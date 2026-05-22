@@ -90,6 +90,7 @@
 
 .day-plan {
   display: flex;
+  align-items: center;
   padding: 22rpx 18rpx;
 }
 
@@ -159,31 +160,47 @@
 
 .actions {
   display: flex;
-  gap: 14rpx;
+  gap: 12rpx;
   margin-top: 18rpx;
-  width: 100%;
 }
 
 .mini-button {
-  flex: 1;
-  min-width: 0;
-  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 142rpx;
+  height: 50rpx;
   padding: 0;
+  border-radius: 999rpx;
   font-size: 22rpx;
+  font-weight: 700;
+}
+
+.mini-button.start {
+  background: #e8f3e8;
+  color: #5f9f72;
+}
+
+.mini-button.done {
+  background: #fffdf7;
+  color: #5f9f72;
+  border: 2rpx solid #dcebdc;
 }
 
 .delete-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 86rpx;
+  width: 56rpx;
   height: 56rpx;
+  flex: 0 0 56rpx;
+  margin-left: 16rpx;
   padding: 0;
   border-radius: 999rpx;
-  background: #fff5f2;
+  background: #fff2ef;
   color: #d96565;
-  font-size: 22rpx;
-  font-weight: 700;
+  font-size: 20rpx;
+  font-weight: 800;
 }
 
 .undated {

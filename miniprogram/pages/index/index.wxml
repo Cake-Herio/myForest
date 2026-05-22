@@ -1,6 +1,6 @@
 <navigation-bar title="MyForest" back="{{false}}" color="#2F3A34" background="#EDF7EE"></navigation-bar>
 
-<scroll-view class="scroll-page" scroll-y type="list">
+<scroll-view class="scroll-page" scroll-y="{{!isRecording && !isTimerSetupVisible}}" type="list">
   <view class="page home">
     <view class="hero">
       <view>
@@ -24,6 +24,7 @@
         bindtouchstart="onVoiceStart"
         bindtouchend="onVoiceEnd"
         bindtouchcancel="onVoiceCancel"
+        catchtouchmove="onVoiceMove"
       >
         <view class="voice-icon">按</view>
         <view>
@@ -32,7 +33,7 @@
         </view>
       </button>
 
-      <button class="focus-button" bindtap="goFocus">
+      <button class="focus-button" bindtap="openTimerSetup">
         <view class="focus-icon">计</view>
         <view>
           <view class="focus-title">开始计时</view>
@@ -66,7 +67,7 @@
       <view class="leaf">芽</view>
     </view>
 
-    <view wx:if="{{isRecording}}" class="voice-mask">
+    <view wx:if="{{isRecording}}" class="voice-mask {{isVoiceCancelling ? 'cancelling' : ''}}" catchtouchmove="onVoiceMove">
       <view class="voice-panel">
         <view class="mic-circle">
           <view class="mic-head"></view>
@@ -79,8 +80,48 @@
           <view class="wave-bar bar-4"></view>
           <view class="wave-bar bar-5"></view>
         </view>
-        <view class="record-title">正在听你说计划</view>
-        <view class="record-tip">松开发送，上滑取消</view>
+        <view class="record-title">{{isVoiceCancelling ? '松开取消' : '正在听你说计划'}}</view>
+        <view class="record-tip">{{isVoiceCancelling ? '回到下方继续录音' : '松开发送，上滑取消'}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{isTimerSetupVisible}}" class="timer-setup-mask" catchtouchmove="noop">
+      <view class="timer-setup-panel" catchtap="noop">
+        <button class="timer-setup-close" bindtap="closeTimerSetup">×</button>
+        <view class="timer-setup-title">开始专注前设置</view>
+        <view class="muted">选好后直接进入计时页面</view>
+
+        <view class="setup-section">计时方式</view>
+        <view class="setup-choice-row">
+          <view class="setup-chip {{timerType === 'countup' ? 'active' : ''}}" data-type="countup" bindtap="chooseTimerType">正计时</view>
+          <view class="setup-chip {{timerType === 'countdown' ? 'active' : ''}}" data-type="countdown" bindtap="chooseTimerType">倒计时</view>
+        </view>
+
+        <view wx:if="{{timerType === 'countdown'}}" class="duration-row">
+          <view
+            wx:for="{{durationOptions}}"
+            wx:key="*this"
+            class="duration-chip {{durationMinutes === item ? 'active' : ''}}"
+            data-minutes="{{item}}"
+            bindtap="chooseDuration"
+          >
+            {{item}} 分钟
+          </view>
+        </view>
+
+        <view class="setup-section">计时模式</view>
+        <view class="setup-mode-row">
+          <view class="setup-mode {{timerMode === 'deep' ? 'active' : ''}}" data-mode="deep" bindtap="chooseTimerMode">
+            <view class="setup-mode-title">深度计时</view>
+            <view class="muted">退出小程序自动暂停</view>
+          </view>
+          <view class="setup-mode {{timerMode === 'shallow' ? 'active' : ''}}" data-mode="shallow" bindtap="chooseTimerMode">
+            <view class="setup-mode-title">浅度计时</view>
+            <view class="muted">退出后继续计时</view>
+          </view>
+        </view>
+
+        <button class="timer-setup-confirm primary-button" bindtap="goFocus">开始计时</button>
       </view>
     </view>
   </view>

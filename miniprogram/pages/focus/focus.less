@@ -24,10 +24,34 @@ page {
   font-weight: 800;
 }
 
-.tag-row {
+.choice-row {
   display: flex;
   gap: 12rpx;
   margin-top: 12rpx;
+}
+
+.choice-chip,
+.duration-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48rpx;
+  padding: 0 22rpx;
+  border-radius: 999rpx;
+  background: #f4f0e8;
+  color: #6e7b71;
+  font-size: 23rpx;
+  font-weight: 700;
+}
+
+.choice-chip.active,
+.duration-chip.active {
+  background: #6fb67b;
+  color: #fff;
+}
+
+.choice-chip.blue {
+  background: #7da7d9;
 }
 
 .mode-title {
@@ -59,6 +83,13 @@ page {
   margin-bottom: 6rpx;
   font-size: 25rpx;
   font-weight: 800;
+}
+
+.duration-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 14rpx;
 }
 
 .timer {
@@ -102,4 +133,98 @@ page {
   flex: 1;
   height: 78rpx;
   font-size: 28rpx;
+}
+
+.finish-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(47, 58, 52, 0.28);
+  animation: modalFadeIn 0.18s ease-out;
+}
+
+.finish-panel {
+  width: 100%;
+  padding: 32rpx 30rpx 42rpx;
+  border-radius: 36rpx 36rpx 0 0;
+  background: #fffdf7;
+  box-sizing: border-box;
+  animation: modalSlideUp 0.22s ease-out;
+}
+
+.finish-title {
+  font-size: 34rpx;
+  font-weight: 900;
+}
+
+.finish-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+  margin-top: 24rpx;
+}
+
+.finish-tag {
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  background: #f4f0e8;
+  color: #6e7b71;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+
+.finish-tag.active {
+  background: #6fb67b;
+  color: #fff;
+}
+
+.detail-input {
+  width: 100%;
+  height: 150rpx;
+  margin-top: 24rpx;
+  padding: 20rpx;
+  border-radius: 24rpx;
+  background: #f6f7f1;
+  color: #2f3a34;
+  font-size: 26rpx;
+  box-sizing: border-box;
+}
+
+.finish-actions {
+  display: flex;
+  gap: 18rpx;
+  margin-top: 24rpx;
+}
+
+.finish-button {
+  flex: 1;
+  height: 82rpx;
+  font-size: 28rpx;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(36rpx);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
